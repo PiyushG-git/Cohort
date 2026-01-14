@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "helvetica neue";
+  color: white;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  cursor: none;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  background-color: black;
+}
+#box{
+    height: 100px;
+    width: 100px;
+    background-color: greenyellow;
+}
+#cursor{
+    height: 20px;
+    position: fixed;
+    transform: translate(-50%,-50%);
+}

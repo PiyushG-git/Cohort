@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Helvetica Neue';
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background: #000;
+  overflow: hidden;
+}
+main{
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+button{
+    padding: 10px 20px;
+    background-color: crimson;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    z-index: 10;
+}
+button:active{
+    scale: 0.95;
+}
+h1{
+    color: white;
+    white-space: nowrap;
+}

@@ -1,0 +1,59 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Helvetica Neue';
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+body{
+    background: #000;
+}
+main{
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card{
+  width: 200px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+}
+.card img{
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+.card h2{
+  font-size: 20px;
+  text-align: center;
+}
+.card i{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: white;
+  font-size: 50px;
+  overflow: hidden;
+  /* background: linear-gradient(purple,pink); */
+  background-image: url(data:image/jpeg;base64,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);
+  background-size: cover;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  opacity: 0;
+  transform: translate(-50%,-50%) scale(0) rotate(-60deg);
+  transition: all cubic-bezier(.41,.81,.55,.94) 0.3s;
+
+}
+
