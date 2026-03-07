@@ -1,0 +1,39 @@
+CLUSTER => storage + processor
+
+DATABASE => use for storing data
+
+ek cluster ke ander multiple database ho skti hai
+
+** in mongodb websites there are two thing for security purpose
+Database Users,IP Access List
+
+cloud => Mongodb 
+
+tpes of servers=> Web servers(hosting websites),Database servers(managing data access), File server (storing data), Email server(handling mail) and Application server (running software)
+
+
+
+
+mongodb+srv://cohort-practice:cohort-practice@cluster0.hsya72k.mongodb.net/
+
+
+password-   W9hmrMQ8iKGxI2vj
+
+mongodb+srv://<db_username>:<db_password>@cluster0.hsya72k.mongodb.net/
+
+mongodb+srv://piyush:W9hmrMQ8iKGxI2vj@cluster0.hsya72k.mongodb.net/
+
+
+day-91
+
+schema
+{
+    title-string
+    description - string
+}
+
+schema
+Model-use when you want to do some changes in db
+
+
+
