@@ -5,10 +5,14 @@ const express = require("express")
 const noteModel=require("./models/note.model")
 const cors =require("cors")
 
+const path=require("path")
+
 const app=express()
 
 app.use(express.json())
 app.use(cors())
+app.use(express.static("./public"))
+// using this you can access the any file in "./public" publicly as"http/localhost:3000/index.html"
 
 // post api-api/notes
 // create new note and saave data in monogodb
@@ -62,5 +66,18 @@ app.patch('/api/notes/:id',async(req,res)=>{
         message:"Note updated successfully."
     })
 })
+
+// adding the public folder
+// app.use('*name',(req,res)=>{
+//     res.send("this is wild card")
+// })  
+//* -> wild card route -> handle the api which are not created
+
+app.use('*name',(req,res)=>{
+    res.sendFile(path.join(__dirname,"..","/public/index.html"))
+})  
+
+
+
 
 module.exports=app
