@@ -27,8 +27,14 @@ const App = () => {
 
   // console.log("Hello React");  //this is continously repeating on the window that's why we have to use useeffect so that i run only once
 
+  // function fetchNotes() {
+  //   axios.get("http://localhost:3000/api/notes").then((res) => {
+  //     // console.log(res);
+  //     setNotes(res.data.notes);
+  //   });
+  // }
   function fetchNotes() {
-    axios.get("http://localhost:3000/api/notes").then((res) => {
+    axios.get("https://cohort-p1jb.onrender.com/api/notes").then((res) => {
       // console.log(res);
       setNotes(res.data.notes);
     });
@@ -38,12 +44,26 @@ const App = () => {
     fetchNotes();
   }, []);
 
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+  //   const { title, description } = e.target.elements;
+  //   // console.log(title.value,description.value);
+  //   axios
+  //     .post("http://localhost:3000/api/notes", {
+  //       title: title.value,
+  //       description: description.value,
+  //     })
+  //     .then((res) => {
+  //       fetchNotes();
+  //     });
+  // }
+
   function handleSubmit(e) {
     e.preventDefault();
     const { title, description } = e.target.elements;
     // console.log(title.value,description.value);
     axios
-      .post("http://localhost:3000/api/notes", {
+      .post("https://cohort-p1jb.onrender.com/api/notes", {
         title: title.value,
         description: description.value,
       })
@@ -52,8 +72,15 @@ const App = () => {
       });
   }
 
+  // function handleDeleteNote(noteId) {
+  //   axios.delete(`http://localhost:3000/api/notes/${noteId}`).then((res) => {
+  //     console.log(res.data);
+  //     fetchNotes(); // refresh notes after delete
+  //   });
+  // }
+
   function handleDeleteNote(noteId) {
-    axios.delete(`http://localhost:3000/api/notes/${noteId}`).then((res) => {
+    axios.delete(`https://cohort-p1jb.onrender.com/api/notes/${noteId}`).then((res) => {
       console.log(res.data);
       fetchNotes(); // refresh notes after delete
     });
