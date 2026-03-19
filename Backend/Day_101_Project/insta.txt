@@ -5,3 +5,11 @@ user={
     bio:String,
     profile_image:String
 }
+
+
+post{
+    caption:String,
+    img_url:String,
+    user:userId,
+    createAt:Date-time
+}
