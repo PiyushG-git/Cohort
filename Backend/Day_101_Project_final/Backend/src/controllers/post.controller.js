@@ -3,6 +3,7 @@ const ImageKit=require("@imagekit/nodejs")
 const {toFile}=require("@imagekit/nodejs")
 const jwt=require("jsonwebtoken")
 const likeModel = require("../models/like.model")
+const { post } = require("../app")
 
 const imagekit=new ImageKit({
     privateKey:process.env.IMAGEKIT_PRIVATE_KEY
@@ -151,10 +152,38 @@ async function likePostController(req,res) {
 }
 
 
+async function getFeedController(req,res) {
+    // const posts=await postModel.find()
+
+    // @important .populate("user") isse user ki id se user ka data bhi res ho jaega
+    // const posts=await postModel.find().populate("user")
+
+    // @know we have to return user like the post or not
+    // @problem-type of post is mongooseObject and we canot update any thing in this mongooseObject , so we need to change it to Object using ".lean()"
+    // we also use "!!" operator to to return true or false instead of return whole data
+    const user=req.user
+    const posts=await Promise.all((await postModel.find().populate("user").lean())
+    .map(async(post)=>{
+        const isLiked=await likeModel.findOne({
+            user:user.username,
+            post:post._id
+        })
+        post.isLiked=!!isLiked
+        return post
+    }))
+
+    res.status(200).json({
+        message:"posts fetched successfully. ",
+        posts
+    })
+}
+
+
 
 module.exports={
     createPostController,
     getPostController,
     getPostDetails,
-    likePostController
+    likePostController,
+    getFeedController
 }

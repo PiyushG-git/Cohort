@@ -77,8 +77,12 @@ async function loginController(req, res) {
   // email &password {username:undefined,email:xyz@gmail.com,passsword:test}
 
   const user = await userModel.findOne({
+
+  //   $or: [{ username: username }, { email: email }],
+  // });    //yehh kaam issliye nhi krega kyuki usermodel me password ko select false kr diya hai tohh hmme forcely select("+password") krke hi check krna hoga
+
     $or: [{ username: username }, { email: email }],
-  });
+  }).select("+password");
   if (!user) {
     return res.status(404).json({
       message: "User not found",
