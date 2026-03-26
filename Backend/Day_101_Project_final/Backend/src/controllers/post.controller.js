@@ -152,6 +152,29 @@ async function likePostController(req,res) {
 }
 
 
+async function unLikePostController(req,res){
+    const username=req.user.username
+    const postId=req.params.postId
+
+    const isLiked=await likeModel.findOne({
+        post:postId,
+        user:username
+    })
+
+    if(!isLiked){
+        return res.status(400).json({
+            message:"Post didn't like"
+        })
+    }
+
+    await likeModel.findOneAndDelete({_id:isLiked._id})
+
+    return res.status(200).json({
+        message:"post un liked successfully"
+    })
+}
+
+
 async function getFeedController(req,res) {
     // const posts=await postModel.find()
 
@@ -162,7 +185,7 @@ async function getFeedController(req,res) {
     // @problem-type of post is mongooseObject and we canot update any thing in this mongooseObject , so we need to change it to Object using ".lean()"
     // we also use "!!" operator to to return true or false instead of return whole data
     const user=req.user
-    const posts=await Promise.all((await postModel.find().populate("user").lean())
+    const posts=await Promise.all((await postModel.find({}).sort({_id:-1}).populate("user").lean())
     .map(async(post)=>{
         const isLiked=await likeModel.findOne({
             user:user.username,
@@ -171,6 +194,8 @@ async function getFeedController(req,res) {
         post.isLiked=!!isLiked
         return post
     }))
+
+    // .sort({_id:-1}) //use to return the feed in sorted order  
 
     res.status(200).json({
         message:"posts fetched successfully. ",
@@ -185,5 +210,6 @@ module.exports={
     getPostController,
     getPostDetails,
     likePostController,
-    getFeedController
+    getFeedController,
+    unLikePostController
 }

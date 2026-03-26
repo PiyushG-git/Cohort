@@ -1,5 +1,5 @@
 const express=require('express')
-const { createPostController, getPostController, getPostDetails, likePostController, getFeedController } = require('../controllers/post.controller')
+const { createPostController, getPostController, getPostDetails, likePostController, getFeedController, unLikePostController } = require('../controllers/post.controller')
 const multer=require("multer")
 const upload=multer({storage:multer.memoryStorage()})
 const identifyUser= require("../middlewares/auth.middleware")
@@ -27,6 +27,8 @@ postRouter.get("/details/:postId",identifyUser,getPostDetails)
 // POST /api/posts/like/:postid
 // like a post with the id provided in the request params.
 postRouter.post("/like/:postId",identifyUser,likePostController)
+
+postRouter.post("/unlike/:postId",identifyUser,unLikePostController)
 
 
 // GET /api/posts/feed
