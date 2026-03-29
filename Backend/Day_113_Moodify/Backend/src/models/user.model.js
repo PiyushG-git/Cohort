@@ -13,12 +13,13 @@ const userSchema=new mongoose.Schema({
     },
     password:{
         type:String,
-        required:[true,"Password is required"]
+        required:[true,"Password is required"],
+        select:false
     }
 })
 
 
-// TASK
+// TASK-Mongoodb middleware/hooks
 // userSchema.pre("save",function(next){ })
 // userSchema.post("save",function(next){ })
 // study both topics
