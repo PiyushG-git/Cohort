@@ -1,0 +1,8 @@
+
+When we use the model direct 
+model donot have records of previous messages
+all the message are independent to each other 
+ai are stateless
+
+to remember all the chat we need to store the chats on database
+
