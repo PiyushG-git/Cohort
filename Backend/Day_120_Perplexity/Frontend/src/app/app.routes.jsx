@@ -3,6 +3,7 @@ import Login from "../feactures/auth/pages/Login";
 import Register from "../feactures/auth/pages/Register";
 import Dashboard from "../feactures/chat/pages/Dashboard";
 import Protected from "../feactures/auth/components/Protected";
+import { Navigate } from "react-router";
 
 export const router=createBrowserRouter([
     {
@@ -16,5 +17,9 @@ export const router=createBrowserRouter([
     {
         path:"/",
         element:<Protected><Dashboard/></Protected>
+    },
+    {
+        path:"/dashboard",
+        element:<Navigate to="/" replace/>
     }
 ])
