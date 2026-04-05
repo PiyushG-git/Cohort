@@ -16,7 +16,6 @@ connectDB()
         console.error("MongoDB connection failed:", err);
         process.exit(1);
     });
-    
 
 httpServer.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
