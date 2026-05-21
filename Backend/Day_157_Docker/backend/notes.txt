@@ -1,0 +1,10 @@
+
+to build image
+docker build . -t express-testing
+
+tu run image
+docker run -p 8080:3000 express-testing 
+
+
+bind mounts
+volumes
