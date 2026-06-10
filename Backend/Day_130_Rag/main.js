@@ -49,6 +49,7 @@ const embeddings = new MistralAIEmbeddings({
 
 // console.log(docs);
 
+// 1024 dimensions for mistral-embed, 512 for mistral-embed-mini
 
 // const result = await index.upsert({
 //     records: docs.map((doc, i) => ({
@@ -59,6 +60,9 @@ const embeddings = new MistralAIEmbeddings({
 //         }
 //     }))
 // })
+
+
+// we stored the data in the index, now we can query it using the same embedding model to find relevant chunks of text based on a query.
 
 
 // console.log(result);

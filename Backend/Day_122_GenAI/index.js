@@ -6,18 +6,21 @@ import { sendEmail } from "./mail.service.js";
 import * as z from "zod"
 // zod is use to handle the format of ai generate content
 
+// tool is a function that takes a function and an object as arguments and returns a new function that can be used as a tool in the agent. The object contains the name, description, and schema of the tool. The schema is used to validate the input that the tool receives from the agent. In this case, we are creating a tool called "emailTool" that uses the "sendEmail" function to send an email. The schema defines the expected input for the tool, which includes the recipient's email address, the HTML content of the email, and the subject of the email.
 const emailTool=tool(
-  sendEmail,
+  sendEmail,   // function that will be called when the tool is used
   {
-    name:"emailTool",
-    description:"Use this tool to send an email",
-    schema:z.object({
+    name:"emailTool",  // name of the tool
+    description:"Use this tool to send an email",     // description of the tool
+    schema:z.object({   // schema of the input that the tool expects
       to: z.string().describe("The recipient's email address"),
       html:z.string().describe("The HTML content of the email"),
       subject:z.string().describe("The subject of the email")
     })
   }
 )
+
+// after this we need to create a agent and pass the tool to it, then we can use the agent to generate the response and it will automatically use the tool when needed
 
 
 const rl = readline.createInterface({

@@ -1,0 +1,21 @@
+phle ec2 that tohh vo ek new server ko load krne ke liye purne server ko down krna padhta tha 
+isko solve krne ke liye kubernetes ayaa isse ab dusre server ko down nhi krna padhta 
+
+
+if user - 1000 -> 1container
+if user 2000 0> 2 container
+
+kubernetes is use to scale up , scale down of server
+(works on demand) automatic
+
+
+
+->Pod is just like container
+
+-> Deployment is component - Image,cpu,ram,maxreplica, replica:2
+
+
+->service
+->Ingress (rule)
+Ingress container(nginx)
+
