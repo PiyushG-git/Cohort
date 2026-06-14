@@ -19,3 +19,156 @@ kubernetes is use to scale up , scale down of server
 ->Ingress (rule)
 Ingress container(nginx)
 
+
+--------------------------------------------------------------------
+steps
+create an image
+docker bulid . -t expres-cohort_2:latest
+docker run -p 3000:3000  expres-cohort_2:latest
+
+docker ps  -- check the running images
+docker rm id  --- remove the image
+docker stop id
+
+
+express-cohort_2 ---(run)---> server(container)
+---------------------------------------------------------------------------
+
+then go to docker setting enable kuburantes(install)
+
+create folder K8s
+=-------------------------------------------------------------------------------
+- depoloymet.yml(manage the manage the pod)  
+    Deployment simple
+
+apiVersion: apps/v1   // name of version
+kind: Deployment
+metadata:
+  name: express-deployment             // deployment name
+spec:
+  replicas: 3          // number of pods
+  selector:
+    matchLabels:
+      app: main-server
+  template:
+    metadata:
+      labels:
+        app: main-server               //pod name
+    spec:
+      containers:                          // each container having this
+      - name: main-server                      // container name
+        image: express_cohort_2:latest         //image name
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000         //trafic on this port
+        resources:
+          limits:
+            memory: "128Mi" # RAM 128 megabytes
+            cpu: "500m" # CPU 500 millicores (0.5 CPU core)
+            # 1 core = 1000m (1000 millicores)
+          requests:
+            memory: "64Mi" # RAM 64 megabytes
+            cpu: "250m" # CPU 250 millicores (0.25 CPU core)
+
+
+=-------------------------------------------------------------------------------
+
+service.yml  - (service complete)
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  main-server-service    // service name
+spec:
+  selector:
+    app:  main-server    // same pod name
+  type: ClusterIP             //cluster iP , loadbalancer
+  ports:
+  - name:  name-of-the-port
+    port:  80
+    targetPort:  3000     // port target
+
+
+=-------------------------------------------------------------------------------
+
+ingress.yml
+
+kubectl apply -f \
+  https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.12.1/deploy/static/provider/cloud/deploy.yaml
+   
+   to install the nginx
+   then write rules
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: express-ingress            //name of ingress
+  labels:
+    app.kubernetes.io/name: express-ingress
+spec:
+  ingressClassName: nginx                  //imp to mention
+  rules:
+    - http:
+        paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: express-service    // same as service
+              port: 
+                number: 80
+
+
+
+=-------------------------------------------------------------------------------
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
+kubectl apply -f k8s/ingress.yaml
+
+
+
+
+--------------------------------------------------------------
+
+metric server--to monitor the cpu and ram used 
+
+Tools- Watch cli -> use to watch the changes in the server live
+        commans - "watch -n 2 kuberctl top nodes"
+     - Hey Cli -> to give trafic on port for testing
+     comaand- "Hey -z 2m -c 200 http://localhost"
+
+=-------------------------------------------------------------------------------
+HPA(Horizontal Pod AutoScaler)- to scale up and scale down of the pods
+kubernetes by default scale nhi kuburantesto scale use this comaand
+"kubectl autoscale deployment express-deployment \
+  --min=1 \
+  --max=5 \
+  --cpu-percent=50"\
+
+#-before this we have to enable the metric server
+# Option A: Official manifest with kubelet insecure TLS patch (recommended for Docker Desktop)
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+# Docker Desktop uses a self-signed cert — patch metrics-server to skip TLS verify:
+kubectl patch deployment metrics-server -n kube-system \
+  --type=json \
+  -p='[{"op":"add","path":"/spec/template/spec/containers/0/args/-","value":"--kubelet-insecure-tls"}]'
+
+# Wait for it to be ready (~30 seconds)
+kubectl rollout status deployment/metrics-server -n kube-system
+
+# Verify it works — you should see CPU and Memory columns
+kubectl top nodes
+kubectl top pods
+
+=-------------------------------------------------------------------------------
+
+- also kubernetes also supports microservices
+
+
+microservice
+1- auth-server
+2- product-server
+3- order-server
+4- payment-server
+5- user-server

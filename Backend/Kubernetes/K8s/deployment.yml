@@ -1,14 +1,27 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: Enter deployment name
+  name: express-deployment
 spec:
-  replicas: Enter the number of replicas
+  replicas: 3
+  selector:
+    matchLabels:
+      app: main-server
   template:
     metadata:
       labels:
-        editor: vscode
+        app: main-server
     spec:
       containers:
-      - name: name
-        image: Enter containers image
+        - name: main-server
+          image: piyushgupta251004/cohort_2_express:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
